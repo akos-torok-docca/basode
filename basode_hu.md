@@ -1,12 +1,9 @@
 # **basode: balanced software development lifecycle**
 
 # **hozzáállási framework \+ implementációs guide v0.56**
+License: GNU GPLv3. Author: akos@docca.org
 
 Mit balanszíroz? A saját szakemberi életidőnk-figyelmünk és token költség közötti egyensúlyozás kérdéseit feszegetem, és írok le perc-életű gondolatokat, megoldásokat, és igyekszem újakat gyűjten, amik újabb perc-életeket élnek. Mert permanens forradalomban vagyunk, mint Lenin szerint a szocializmus.
-
-Monolitikus SSOT és injektált állapotvezérelt szoftverfejlesztés orchestrator modell.
-
-\<a href\="https\://docca.org/balanced-sdlc-framework-for-agentic-development/"\>Balanced Software Development Lifecycle \- Conceptual Framework and Implementation Guide\</a\> © 2026 by akotomars\</a\> is licensed under \<a href\="https\://creativecommons.org/licenses/by-sa/4.0/"\>CC BY-SA 4.0\</a\>\<img src\="https\://mirrors.creativecommons.org/presskit/icons/cc.svg" alt\="" style\="max-width: 1em;max-height:1em;margin-left: .2em;"\>\<img src\="https\://mirrors.creativecommons.org/presskit/icons/by.svg" alt\="" style\="max-width: 1em;max-height:1em;margin-left: .2em;"\>\<img src\="https\://mirrors.creativecommons.org/presskit/icons/sa.svg" alt\="" style\="max-width: 1em;max-height:1em;margin-left: .2em;"\>
 
 Rokon törekvések, címkék: 
 
