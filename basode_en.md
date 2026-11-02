@@ -7,7 +7,8 @@ What is it balancing? I discuss the issues of balancing our own professional lif
 
 Related endeavors, tags:
 
-* spec driven development (SDD)  
+* spec driven development (SDD)
+* Domain Storytelling
 * harness engineering, platform engineering  
 * delivery system-target system  
 * expert attention as a bottleneck
