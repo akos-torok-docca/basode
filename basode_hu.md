@@ -7,9 +7,10 @@ Mit balanszíroz? A saját szakemberi életidőnk-figyelmünk és token költsé
 
 Rokon törekvések, címkék: 
 
-* spec driven development (SDD)  
+* spec driven development (SDD)
+* Domain Storytelling
 * harness engineering, platform engineering  
-* delivery system-target system  
+* delivery system-target system
 * szakértői figyelem mint bottleneck
 
 **A fő kihívások: a PRD kezelése, és a AI-ember munkamegosztási optimum keresése**
