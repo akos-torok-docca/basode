@@ -1,6 +1,6 @@
-# **basode: balanced software development lifecycle avagy "software factory"**
+# **basode: balanced sdlc avagy software factory**
 
-# **hozzáállási framework \+ implementációs guide v0.57**
+# **hozzáállási framework \+ implementációs guide v0.58**
 License: GNU GPLv3. Author: akos@docca.org
 
 Mit balanszíroz? A saját szakemberi életidőnk-figyelmünk és token költség közötti egyensúlyozás kérdéseit feszegetem, és írok le perc-életű gondolatokat, megoldásokat, és igyekszem újakat gyűjteni, amik újabb perc-életeket élnek. Mert permanens forradalomban vagyunk, mint Lenin szerint a szocializmus.
@@ -12,7 +12,8 @@ Rokon törekvések, címkék:
 * harness engineering, platform engineering  
 * delivery system-target system
 * szakértői figyelem mint bottleneck
-
+* autoencoder = factory
+* 
 **A fő kihívások: a PRD kezelése, és a AI-ember munkamegosztási optimum keresése**
 
 *Ez a rész elég száraz, érdemes átugrani. Utólag talán triviális.*
@@ -20,7 +21,7 @@ Rokon törekvések, címkék:
 Nagyon tömören ez a doksi arról szól, hogy egy szoftver fejlesztési projekt esetén \- tekintettel a 2026\. Q2 helyzetre \- a fő feladat szerintem:
 
 -  a Product Requirements Document (PRD) nagyon tudatos és hatékony menedzselése, (“name of the game: manage the PRD at the lowest cognitive effort”)   
-- és a PRD változásokat megvalósító erőforrások észszerű használata. E másodikról nagyon sok szó esik a szoftveres körökben \-, YT-on, X-en, stb., különféle SDLC-k, harness-ek,  skill-ek, workflow-k, rule-ok, stb. formájában \- tehát én itt erről kevesebben fogok beszélni: mert erősen termékfüggő, gyorsan változik, és mert más források jobbak, mint amit én tudok erről mondani.
+- és a PRD változásokat megvalósító erőforrások észszerű használata. E másodikról nagyon sok szó esik a szoftveres körökben \-, YT-on, X-en, stb., különféle SDLC-k, harness-ek,  skill-ek, workflow-k, rule-ok, software factory stb. formájában \- tehát én itt erről kevesebben fogok beszélni: a megvalósítás erősen termékfüggő (harness-függő), gyorsan változik, és mert más források jobbak, mint amit én tudok erről mondani.
 
 Megjegyzés: az itt tárgyalt fejlesztési szervezeti működés azonos az emberi programozók által kivitelezett fejlesztésekkel, azonban eltolódtak a súlyok a agentek és az emberi programozók erősségei és gyengeségei különbözősége miatt (pl. ár, sebesség, átfogó kép érzékelése).
 
@@ -30,7 +31,12 @@ A fenti mondások ezen egyszerű helyzetkép következményei:
   - Ezért ennek kell egyértelműnek lennie, azaz a PRD kapcsán a SSOT és DRY elvek szigorú betartása a projekt hatékonyságának az egyik kulcsa.   
   - Teljes legyen-e a PRD? Erre nincs szükség, sőt, általában lehetőség sincs (hiszen általában egy ötlettel kezdünk \- ami majd fejlődik, amint kipróbáljuk az első verziót). Egyúttal előnyös, ha a kezdeti PRD minél közelebb van a teljességhez, mert az első fejlesztési iterációban, azaz az első “mega-sprint” során relatíve olcsón kapunk egy elég jó eredményt.  
   - Hatékonyan menedzselhető PRD kell. Erre hozok itt javaslatot \- egyúttal feltételezem, hogy ebben sok új ötlet várható, amint ez a felismerés elterjedtté válik.   
-    - Röviden a lényeg: inkább történetekben mondjuk el, hogy hogyan működik a rendszer, és majd abból az AI-tól várjunk száraz, logikus, hagyományos spect (amit nekünk el sem kell olvasnunk). Miért? Mert nekünk könnyebb történteket írni, érteni, hogy a *“Dezső kapott egy új munkát emailben, itt a rendszerben készített hozzá egy projektet az “új munkaszám” funkcióval, és meghívta Ágit, Ferit és Katit, akik ezáltal minden doksit láttak, amelyek ehhez a projekthez már le voltak mentve, sőt szerkesztésükben is részt tudnak venni, és kell is, hiszen ők fordítják le három nyelvre a doksikat”* \- mint tech spect írni: *“bal menü: “új munkaszám”, ez létrehozza egy új MUNKASZÁM  objektumot, amelyhez USER-eket lehet rendelni. USER jogosult a MUNKASZÁM-hoz tartozó FILE objektumokra RW joggal.”*  
+    - Röviden a lényeg: autoenkóder-szerű fejlesztés - eval-szerű megközelítés.
+      - Bemenet: Történetekben mondjuk el, hogy hogyan működik a rendszer.
+      - AI munka ~ "enkóder": 
+        - a történetekből az AI-tól várjunk száraz, logikus, hagyományos spect (amit nekünk el sem kell olvasnunk), és főleg: a már a kész kódot. Miért? Mert nekünk könnyebb történteket írni, érteni, hogy a *“Dezső kapott egy új munkát emailben, itt a rendszerben készített hozzá egy projektet az “új munkaszám” funkcióval, és meghívta Ágit, Ferit és Katit, akik ezáltal minden doksit láttak, amelyek ehhez a projekthez már le voltak mentve, sőt szerkesztésükben is részt tudnak venni, és kell is, hiszen ők fordítják le három nyelvre a doksikat”* \- mint tech spect írni: *“bal menü: “új munkaszám”, ez létrehozza egy új MUNKASZÁM  objektumot, amelyhez USER-eket lehet rendelni. USER jogosult a MUNKASZÁM-hoz tartozó FILE objektumokra RW joggal.”*
+      - Kimenet ~ "dekóder": a kód alapján (!) "user manual" szerű rekonstrukciót készít egy önálló agent.
+      - Összehasonlítás: ha az eredeti mesére (bemenet) rátesszük a user manualt (kimenet), akkor láthatjuk, hogy a szándékunk szerinti termék jött-e létre. Ez nyilván nem tökéletes, full autonóm megoldás, de sok humán munkát kivehet a kezünkből. (Megjegyzés: ezt az utolsó, összehasonlító mozzanatot még nem alkalmazom (2026-11-14) , mert benne vagyok egy projektben, ami elviszi az időm, de ez a következő lépés.)
 - Védjük a pénztárcánkat: az agentek képességei limitáltak, de szívesen próbálkoznak mindaddig, amíg a pénztárcánk vagy más erőforrásunk engedi. Bár az agentek próbálkozásai is költségesek, de részeredményeket menedzselni \- az emberi idő értéke miatt \- is  költséges. A feladat tehát az, hogy ebben megtaláljuk az optimumot.  
 - (??? készítsük el ennek a rövid változatát és keressünk helyet a bővebbnek ???) Legalább két userrel dolgozzunk: az agentek olyan mint egy távirányítható robot a lakásunkban: tud hasznosan tenni-venni, de látszólag random módon ijesztő dolgokat tehet, esetleg teljesen átvehetik felette az uralmat távolról, és ezért megváltozhat a viselkedése. Ezért a lakásunk olyan részébe engedjük csak, ahol nincs láncfűrész, nincs ott a bankkártyánk, és nincs benzines kanna és gyufa, \- sőt: telefon sincs, amivel intézkedni tud szabadon, pl. benzint és gyufát tud rendelni. 
 
@@ -242,7 +248,9 @@ Lehetőségek, amiket én találtam \- egyúttal egy dilemma is:
 - a [SKILL.md](http://SKILL.md) \-ben \- az agentic fejlesztői rendszerek működése miatt \- ugyanez az infó kötelezően megjelenik. Ennek feloldása: a scriptek a [skill.md](http://skill.md)\-ből egy meghatározott frontmatter mezőből mutatják a saját help-jüket. Hátrány: nincs elég szorosan a scripthez kötve a help-je, doksija.  
 - [skill.md](http://skill.md) mellé/alá pakolni. Valahogy ellenérzéseim vannak ezzel kapcsolatban jelenleg, mert elszakítja a projektben emberi aggyal megtalálható helyéről, és \- mivel beteszi a harness által meghatározott skill folderekbe \- harness specifikussá teszi.
 
-## Appendix 1: todo, merge előtti ötletek
+## Appendix 1: ötletmorzsák, ha lesz időm, felviszem a fő doksiba
+
+### 
 
 ### izoláció agent eltérítési veszélyek miatt \#harness\_engineering
 
