@@ -1,6 +1,6 @@
-# **basode: balanced software development lifecycle**
+# **basode: balanced software development lifecycle avagy "software factory"**
 
-# **hozzáállási framework \+ implementációs guide v0.56**
+# **hozzáállási framework \+ implementációs guide v0.57**
 License: GNU GPLv3. Author: akos@docca.org
 
 Mit balanszíroz? A saját szakemberi életidőnk-figyelmünk és token költség közötti egyensúlyozás kérdéseit feszegetem, és írok le perc-életű gondolatokat, megoldásokat, és igyekszem újakat gyűjteni, amik újabb perc-életeket élnek. Mert permanens forradalomban vagyunk, mint Lenin szerint a szocializmus.
@@ -246,11 +246,29 @@ Lehetőségek, amiket én találtam \- egyúttal egy dilemma is:
 
 ### izoláció agent eltérítési veszélyek miatt \#harness\_engineering
 
-projekt alapozáskor: külön oprenszer user az agenteknek, név alapján is megkülönböztetni, hogy mi emberek, soha ne felejetsük el, hogy azzal a technikai user objektummal ne osszunk meg olyasmit, amiből baj lehet. 
+projekt alapozáskor: 
+* külön oprendszer user az agenteknek, név alapján is megkülönböztetni, hogy mi emberek, soha ne felejetsük el, hogy azzal a technikai user objektummal ne osszunk meg olyasmit, amiből baj lehet.
+* külön git repók a syslayer-eknek. Átgondolandó egyúttal, hogy melyik repó él a filesystem-en fizikailag közös directory-ban, és mi különül el. :
+ * target system - ezen belül program kód al-domain-ek, pl. ami pénzt, jogosultságot, DPA-t érint
+  * UI
+  * anyagi dolgok, tenant/user (fizető közönség) credit vagy usage menedzselése
+  * jogosultság és DPA kezelési funkciók
+* dev réteg:
+ * gyakran változó dolgok, amik a git-ben zajosak lehetnek: pl. kanban vagy más feladatkövető részek, plan-ek
+ * stabil, ritkán változó dolgok mehetnek egy repóba szerintem:
+   * általános fejlesztési elvek (project független)
+   * project specifikus tudnivalók
+* infra, devops, itt jelenik meg a titok kezelés is: dev-en és a külső (uat és prod) env-ek esetén eltérő
+* product owner
+* delivery architect (közben ennek kialakult a neve: factory engineer, esetleg platform engineer)
+* esetleg: founder
 
-### (git) repó izoláció hagymahéj rétegenként
+### cross-harness communication
 
-vagy minimum: delivery system, target system
+ez a sok pénzzel rendelkezőket nem biztos, hogy érinti: a különféle előfizetési plan-ek és harness-ek (Claude Code, AGY, Codex) közötti együttműködés felállítása
+- a működést (az sdlc~factory) szabályozó fájlok menedzselése olyan módon, hogy ha több harness-ben dolgozunk párhuzamosan, akkor a lehető legkevesebb emberi munkával tartsuk szinkronban az azonos működést. Például: ha egy módosítást végzünk egy Claude code skill-en, az egyúttal az AGY skill-ben is érvényesüljön - és viszont.
+- kommunikáció felállítása: a harnessek között és a harnessen belül session-ök (convó-k, stb. néven nevezett szálak) között gördülékeny, kevés token és egyéb erőforrás overhead-del tudjon menni a kommunikáció. pl az üzengetés mehet az alábbi közegek által: fájlok, maildir, NATS JetStream, rabbit mq, stb.stb. - van pár kérdés, főleg a session-ök beazonosításával. amikor ezt írom, még nincs erre a neten fellelhető kész megoldás (skill,y hook, plugin, stb), de feltételezem, hogy ez napok-hetek kérdése.
+
 
 ### Delivery system fájlok verziózása
 
@@ -277,10 +295,6 @@ a vitális fájlból egy letisztultabb doksiba. miért?
 #### legyen jó helyen az a plan fájl, amin beszélgetünk
 
 CC: a configban (settings.json) meghatározható a plan fájl helye ("plansDirectory") . megfontolások: mennyire közös a projekt többi emberi dolgozójával (azaz legyen-e gitben ez), és mennyire projekt specifikus, és a “gyakorlati megoldások” alatti workflow-hoz illeszkedjen, azaz optimalizáljunk arra, hogy ne kelljen másolgatni a harness/agent által szerkesztett fájt és azt, amit mi is nézegetünk-annotálunk-módosítunk.
-
-#### gyarkolati megoldások
-
-biztos vagyok benne, hogy erre van jobb megoldás, és szeretném valakitől eltanulni. egyelőre ezeket az irányokat vizsgáltam:
 
 ##### AGY: artifact
 
