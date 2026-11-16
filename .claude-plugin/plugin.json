@@ -1,0 +1,7 @@
+{
+  "name": "basode",
+  "version": "0.1.0",
+  "description": "Basode framework tools: skills, questionnaires and templates that set up a basode delivery system from scratch (the delivery system of the delivery system).",
+  "author": { "name": "akos-torok-docca" },
+  "repository": "https://github.com/akos-torok-docca/basode"
+}

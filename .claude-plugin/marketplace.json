@@ -1,0 +1,14 @@
+{
+  "name": "basode",
+  "description": "Basode framework: Claude Code plugin with tools that set up a basode delivery system from scratch.",
+  "owner": {
+    "name": "akos-torok-docca"
+  },
+  "plugins": [
+    {
+      "name": "basode",
+      "source": "./",
+      "description": "Basode framework tools: set up a basode delivery system from scratch."
+    }
+  ]
+}
