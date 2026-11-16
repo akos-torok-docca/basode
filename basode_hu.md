@@ -1,6 +1,6 @@
 # **basode: balanced sdlc avagy software factory**
 
-# **hozzáállási framework \+ implementációs guide v0.58**
+# **hozzáállási framework \+ implementációs guide v0.59**
 License: GNU GPLv3. Author: akos@docca.org
 
 Mit balanszíroz? A saját szakemberi életidőnk-figyelmünk és token költség közötti egyensúlyozás kérdéseit feszegetem, és írok le perc-életű gondolatokat, megoldásokat, és igyekszem újakat gyűjteni, amik újabb perc-életeket élnek. Mert permanens forradalomban vagyunk, mint Lenin szerint a szocializmus.
@@ -8,12 +8,12 @@ Mit balanszíroz? A saját szakemberi életidőnk-figyelmünk és token költsé
 Rokon törekvések, címkék: 
 
 * spec driven development (SDD)
-* Domain Storytelling
+* Domain Storytelling -> Critical User Journey (CUJ) -> eval
 * harness engineering, platform engineering  
 * delivery system-target system
 * szakértői figyelem mint bottleneck
-* autoencoder = factory
-* 
+* autoencoder-szerű eval 
+  
 **A fő kihívások: a PRD kezelése, és a AI-ember munkamegosztási optimum keresése**
 
 *Ez a rész elég száraz, érdemes átugrani. Utólag talán triviális.*
@@ -23,7 +23,7 @@ Nagyon tömören ez a doksi arról szól, hogy egy szoftver fejlesztési projekt
 -  a Product Requirements Document (PRD) nagyon tudatos és hatékony menedzselése, (“name of the game: manage the PRD at the lowest cognitive effort”)   
 - és a PRD változásokat megvalósító erőforrások észszerű használata. E másodikról nagyon sok szó esik a szoftveres körökben \-, YT-on, X-en, stb., különféle SDLC-k, harness-ek,  skill-ek, workflow-k, rule-ok, software factory stb. formájában \- tehát én itt erről kevesebben fogok beszélni: a megvalósítás erősen termékfüggő (harness-függő), gyorsan változik, és mert más források jobbak, mint amit én tudok erről mondani.
 
-Megjegyzés: az itt tárgyalt fejlesztési szervezeti működés azonos az emberi programozók által kivitelezett fejlesztésekkel, azonban eltolódtak a súlyok a agentek és az emberi programozók erősségei és gyengeségei különbözősége miatt (pl. ár, sebesség, átfogó kép érzékelése).
+Megjegyzés: az itt tárgyalt fejlesztési szervezeti működés azonos az emberi programozók által kivitelezett fejlesztésekkel, azonban eltolódtak a súlyok az agentek és az emberi programozók erősségei és gyengeségei különbözősége miatt (pl. ár, sebesség, átfogó kép érzékelése).
 
 A fenti mondások ezen egyszerű helyzetkép következményei: 
 
@@ -31,7 +31,7 @@ A fenti mondások ezen egyszerű helyzetkép következményei:
   - Ezért ennek kell egyértelműnek lennie, azaz a PRD kapcsán a SSOT és DRY elvek szigorú betartása a projekt hatékonyságának az egyik kulcsa.   
   - Teljes legyen-e a PRD? Erre nincs szükség, sőt, általában lehetőség sincs (hiszen általában egy ötlettel kezdünk \- ami majd fejlődik, amint kipróbáljuk az első verziót). Egyúttal előnyös, ha a kezdeti PRD minél közelebb van a teljességhez, mert az első fejlesztési iterációban, azaz az első “mega-sprint” során relatíve olcsón kapunk egy elég jó eredményt.  
   - Hatékonyan menedzselhető PRD kell. Erre hozok itt javaslatot \- egyúttal feltételezem, hogy ebben sok új ötlet várható, amint ez a felismerés elterjedtté válik.   
-    - Röviden a lényeg: autoenkóder-szerű fejlesztés - talán kicsit eval-szerű megközelítés, bár nincs benne számszerűsítés.
+    - Röviden a lényeg: autoenkóder-szerű fejlesztés - talán kicsit eval-szerű megközelítés, bár nincs benne objektív számszerűsítés. Tömören: (a) kiindulás: spec -> (b) kód -> (c) visszaalakított állapot: user manual. Eval : (a) vs (b), azaz kiindulás vs visszalakított állapot. AI agentek (stakeholderek) zsűriznek, pontoznak. 
       - Bemenet: Történetekben mondjuk el, hogy hogyan működik a rendszer.
       - AI munka ~ "enkóder": 
         - a történetekből az AI-tól várjunk száraz, logikus, hagyományos spect (amit nekünk el sem kell olvasnunk), és főleg: a már a kész kódot. Miért? Mert nekünk könnyebb történteket írni, érteni, hogy a *“Dezső kapott egy új munkát emailben, itt a rendszerben készített hozzá egy projektet az “új munkaszám” funkcióval, és meghívta Ágit, Ferit és Katit, akik ezáltal minden doksit láttak, amelyek ehhez a projekthez már le voltak mentve, sőt szerkesztésükben is részt tudnak venni, és kell is, hiszen ők fordítják le három nyelvre a doksikat”* \- mint tech spect írni: *“bal menü: “új munkaszám”, ez létrehozza egy új MUNKASZÁM  objektumot, amelyhez USER-eket lehet rendelni. USER jogosult a MUNKASZÁM-hoz tartozó FILE objektumokra RW joggal.”*
@@ -76,9 +76,9 @@ Erről fog szólni ez az iromány.
 
 Hagyományos szoftverfejlesztési környezetben a projektmenedzsment konzisztenciáját a humán aktorok soft skilljei, a formalizált SOP-k (Standard Operating Procedures), valamint az íratlan közösségi normák és implicit munkaköri leírások adják.
 
-Az AI programozó agentek belépésével ez a helyzet megváltozott. Az ágensek nem rendelkeznek a számukra megmutatott adatokon kívül a helyi tudással; működésük szigorúan az explicit módon biztosított kontextusra korlátozódik. A munkavégzés szabályai immár nem a projekten kívül lebegő fejlesztői közösség (cég, open source közösség, stb.) kultúrájának részei, hanem a projekt elválaszthatatlan, kódként kezelt (**Docs-as-Code**) komponensei.
+Az AI programozó agentek belépésével ez a helyzet megváltozott. Az agentek nem rendelkeznek a számukra megmutatott adatokon kívül a helyi tudással; működésük szigorúan az explicit módon biztosított kontextusra korlátozódik. A munkavégzés szabályai immár nem a projekten kívül lebegő fejlesztői közösség (cég, open source közösség, stb.) kultúrájának részei, hanem a projekt elválaszthatatlan, kódként kezelt (**Docs-as-Code**) komponensei.
 
-A **basode** keretrendszer erre az architekturális kényszerre reagál. A korábban lágy, humán-vezérelt folyamatokat gépileg értelmezhető, nyomon követhető szabályrendszerré konvertálja. Ez radikálisan kitágítja az AI ágensek autonómiájának határait, képessé téve őket komplexebb és vertikálisan kiterjedtebb fejlesztési iterációk önálló végrehajtására.
+A **basode** keretrendszer erre az architekturális kényszerre reagál. A korábban lágy, humán-vezérelt folyamatokat gépileg értelmezhető, nyomon követhető szabályrendszerré konvertálja. Ez radikálisan kitágítja az AI agentek autonómiájának határait, képessé téve őket komplexebb és vertikálisan kiterjedtebb fejlesztési iterációk önálló végrehajtására.
 
 ## **2\. Hasonlatok: a tó víztükre és a kettős könyvelés**
 
@@ -137,7 +137,7 @@ A valóságban a "Target" és a "Delivery" fogalma relatív \- bár az esetek je
 * **syslayer2b: Product Owner, PO.** A vízióból (kezdeti doksi) és a user igényekből (a tóba dobált kövek, avagy a kanban-ba jövő ötletek, bugfixek, stb.) készít igényspecifikációt, azaz target system/doclayer1-et  
 * **(ezt nem használom: syslayer2c: Marketing** A víziót viszi a “piacra”: közösség elé, befektetők felé, vevők felé, stb.)   
 *  **syslayer3a: az infrastruktúra és deploy felelős, INFRA (vagy DevOps, vagy Platform Engineer):** a dev infra, és CI/CD tervek és pipeline-ok felelőse. Lehetne egy syslayer2c is, most nálam 3a  
-* **syslayer3b: DEV, (a Dev Tools / Agents):** Fejlesztési szabályok, ágens profilok, szkriptek.  
+* **syslayer3b: DEV, (a Dev Tools / Agents):** Fejlesztési szabályok, agent profilok, szkriptek.  
 * **syslayer4 (Product):** A belső mag (üzleti specifikáció és kód). Ez a gyönyörű tulipán, amit a hagyma hozott létre: a külső héjtól \- az ötlettől/víziótól kifejlődött a hagyma, és legbelső részéből kibújt a tulipán.
 
 A feladatkövetés ebben a modellben lehet elosztott (külön csapatok esetén) vagy monolitikus (agentic fejlesztésnél), ahol egyetlen Kanban táblán metaadatok jelölik az érintett hagymahéjat.
@@ -158,7 +158,7 @@ A basode nem vákuumban jött létre, hanem bevált iparági sztenderdek és arc
 ### **A legfontosabb elvi metszéspontok**
 
 * **Karbantarthatóság (DRY \+ SOLID \+ LoD):** Mindhárom alapelv célja, hogy ha egy helyen belenyúlunk a rendszerbe, ne törjön el tíz másik helyen. A basode a Delivery és Target System, valamint a doclayer és syslayer rétegek szétválasztásával biztosítja ezt az architekturális izolációt.  
-* **Egyszerűség és fókusz (YAGNI \+ SMART \+ Pareto-elv):** Ezen elvek mindegyike a fókuszt védi. Azt mondják: *"Ne csinálj többet, mint ami a cél eléréséhez feltétlenül szükséges."* Az Agentic AI fejlesztésben ez kritikus: az ágensek token- és kontextusablak-fogyasztásának, valamint a felesleges "hullámverésnek" a minimalizálását szolgálja.  
+* **Egyszerűség és fókusz (YAGNI \+ SMART \+ Pareto-elv):** Ezen elvek mindegyike a fókuszt védi. Azt mondják: *"Ne csinálj többet, mint ami a cél eléréséhez feltétlenül szükséges."* Az Agentic AI fejlesztésben ez kritikus: az agentek token- és kontextusablak-fogyasztásának, valamint a felesleges "hullámverésnek" a minimalizálását szolgálja.  
 * **Helyesség és konzisztencia (SSOT \+ DRY):** Ez a duó garantálja, hogy ne legyen két különböző verzió ugyanabból az igazságból (legyen az adat, algoritmus vagy specifikáció). A kettős könyvelés ellenére a basode szigorúan védi az egyetlen igazságforrást (SSOT), megakadályozva az állapot-töredezettséget.
 
 ## **7\. Gyakorlat: megfontolandók**
@@ -179,7 +179,7 @@ Az emberi fókusz drága erőforrás. A két legnagyobb időrabló tevékenység
 1. **Humán tesztelés (UAT):** A megvalósult, futó termék manuális, emberi kipróbálása.  
 2. **Generált dokumentációk felelős auditja:** A végső (eredmény) dokumentációk átolvasása és jóváhagyása. Gyakorlatban ez azt jelenti, hogy a “user manual” jellegű doksit ugyanúgy outputjai az agent munkájának, mint a programkód \-\> se user manual doksit, se program kódot nem írok, hanem agent írja.
 
-Ezeket a feladatokat tervezni kell, és ahol lehetséges, ágens-alapú verifikációs tesztekkel (pl. E2E Gherkin) kell helyettesíteni az emberi kattintgatást.
+Ezeket a feladatokat tervezni kell, és ahol lehetséges, agent-alapú verifikációs tesztekkel (pl. E2E Gherkin) kell helyettesíteni az emberi kattintgatást.
 
 ## **8\. Gyakorlati alkalmazás (Playbook)**
 
@@ -198,7 +198,7 @@ Induló projekt esetén a basode bevezetése egy determinisztikus önértékelé
    * **Bugfix vs változás kérés:** az természetes, hogy ha befogadunk egy ideát (változás kérést), akkor a DL1-en WIP injektálással ezt jelezzük. A bugfix eltérő: egyrészt itt egy belső megegyezés szerinti szintaktikával jelezzük, hogy egy bugfix. Másrészt a DL1-be nem végső módosításként, hanem átmenetileg kerül be. Létének célja DL1 dokumentációban \- WIP injekcióval \- az, hogy ha esetleg több bejelentés is érkezne azonos bug kapcsán, akkor a “tóba csobbanás” előtt az újabb, azonos kéréseket ki tudjuk szűrni, és elutasítani, hiszen bugfix-WIP bejegyzés által látjuk, hogy ez a téma már napirenden van. Amint sdlc flow ezen jegyre véget ér, azaz amint a hiba javításra került, akkor a DL1-ből eltávolítható a teljes WIP injektum.  
    * “Deprecated”: desztillációkor töröljük a wrapperek által közrefogott részt.  
 6. Antigravity által adott “implementation\_plan” hasznos dokumentum, de konvertálandó:  
-   * Opció 1.: kanban jegyekre \- és ha egy teljesen új témakört hoz létre, akkor a megfelelő SSOT dokumentumokat is létre kell hozatni az agenttel (és ide jön a WIP injekciók jelentős része az új kanban jegyekből)  
+   * Opció 1.: kanban jegyekre \- és ha egy teljesen új témakört hoz létre, akkor a megfelelő SSOT dokumentumokat is létre kell hozatni az agent-etel (és ide jön a WIP injekciók jelentős része az új kanban jegyekből)  
    * Opció 2.: esetenként le lehet programoztatni direkben, ha tudjuk garantálni, hogy a doclayer-ekben utána tényleg le lesz dokumentálva, ha a tesztek szükségtelenek, stb. \- azaz valamiért az SDLC lépései elhagyhatóak, és nem akarjuk égetni a tokeneket a formalitások betartatása érdekében. Nyilván: óvatosan ezzel, mert megbosszúlhatja magát a spórolás.
 
 ### **8.2. Futó projekt migrációja (Brownfield / Rescue)**
@@ -207,7 +207,7 @@ Amikor egy meglévő agentic projekt a "szétesés jeleit" mutatja (kontextusves
 
 1. **Ideális állapot definiálása:** A 8.1-es pont alapján a célstruktúra felvázolása.  
 2. **Gap analízis (Önvizsgálat):** Mi a valóság? (Folderek, folyamatok, .agent fájlok állapota, az SSOT töredezettsége).  
-3. **Migrációs terv:** Készítsünk ágens-vezérelt szkripteket, teszteket és hozzuk létre a hiányzó dokumentációs rétegeket Ez maga is AI feladat \- de átnézni, javítani: itt van a munka\! Ez kőkemény, időigényes, nem kreatív \- és ezért veszélyesen unalmas feladat **Vigyázat\! Ez maga a lényegi feladat\!** Nekem pl. ez egy 230 oldalas generált doksi volt, mesék, történetek, itt buktak ki azok a fogalmi zavarok, megismételt történetek, amelyek kis eltéréssel ugyanazt tartalmazták, de korábban félrevitték a fejlesztést.   
+3. **Migrációs terv:** Készítsünk agent-vezérelt szkripteket, teszteket és hozzuk létre a hiányzó dokumentációs rétegeket Ez maga is AI feladat \- de átnézni, javítani: itt van a munka\! Ez kőkemény, időigényes, nem kreatív \- és ezért veszélyesen unalmas feladat **Vigyázat\! Ez maga a lényegi feladat\!** Nekem pl. ez egy 230 oldalas generált doksi volt, mesék, történetek, itt buktak ki azok a fogalmi zavarok, megismételt történetek, amelyek kis eltéréssel ugyanazt tartalmazták, de korábban félrevitték a fejlesztést.   
 4. **Nyitott kanban jegyek konverziója:** WIP injektumok létrehozása. Ezt agent csinálja, két aleset van:  
    * A jegy egy, a dl1-ben már  leírt helyzetről szól. Ez esetben a doksiban csak a jegy által megvalósítandó részt tesszük WIP wrappingbe \- és esetleg a jegyre visszaírjuk a WIP mezőbe az injektumot, de ez nem annyira fontos.  
    * A jegy egy olyan ötlet, változás “köve a tóban”, ami még nincs rávezetve a dl1-re. Ez esetben fullos WIP injekció: a jegyre is, és a dl1-be is. 
@@ -220,18 +220,18 @@ Ez akkor áll elő, amikor a kiindulási állapothoz képest megváltoznak a han
 
 ## **9\. Az agentic működés felállítása, karbantartása: harness development (Claude Code és AGY)**
 
-Ahhoz, hogy az adminisztráció és a kettős könyvelés ne emberi teher legyen, magukat az autonóm ágenseket kell felkészíteni a basode szabályainak betartására.
+Ahhoz, hogy az adminisztráció és a kettős könyvelés ne emberi teher legyen, magukat az autonóm agenteket kell felkészíteni a basode szabályainak betartására.
 
-### **Ágens képességek (Skills)**
+### **agent képességek (Skills)**
 
-* **Információ-allokációs logika:** Az ágensnek képesnek kell lennie eldönteni, hogy egy újonnan generált vagy kapott információ a DRY és az SSOT elvek alapján melyik syslayer melyik doclayer rétegébe való. Nem duplikálhat, hanem a meglévő helyre kell fűznie, vagy pointert kell létrehoznia.
+* **Információ-allokációs logika:** A fejlesztésben résztvevő agentnek képesnek kell lennie eldönteni, hogy egy újonnan generált vagy kapott információ a DRY és az SSOT elvek alapján melyik syslayer melyik doclayer rétegébe való. Nem duplikálhat, hanem a meglévő helyre kell fűznie, vagy pointert kell létrehoznia.
 
-### **Ágens szabályok (Rules)**
+### **agent szabályok (Rules)**
 
-* **SSOT Registry iteráció:** Információ keresése esetén az ágensnek ismernie kell a dokumentációs láncolatot. Tudnia kell, hogyan navigáljon a legfelsőbb narratív szinttől a technikai megvalósításig anélkül, hogy elveszne a kontextusban.  
+* **SSOT Registry iteráció:** Információ keresése esetén az agentnek ismernie kell a dokumentációs láncolatot. Tudnia kell, hogyan navigáljon a legfelsőbb narratív szinttől a technikai megvalósításig anélkül, hogy elveszne a kontextusban.  
 * **Injektálási jogosultság (Write protocol):** Szabályozott hozzáférés és szintaktikai fegyelem (\<wip\> markerek elhelyezése) az információk dokumentációs rendszerekbe történő beírásakor, garantálva a kettős könyvelés szinkronitását.
 
-### **Ágens folyamatok (AGY: workflows, CC: commands)**
+### **agent folyamatok (AGY: workflows, CC: commands)**
 
 Itt vannak az sdlc lépései (nálam: specifikálás, tesztfejlesztés/fejlesztés, tesztelés, desztillálás), továbbá karbantartó folyamatok.
 
@@ -250,7 +250,16 @@ Lehetőségek, amiket én találtam \- egyúttal egy dilemma is:
 
 ## Appendix 1: ötletmorzsák, ha lesz időm, felviszem a fő doksiba
 
-### 
+### minden stakeholder számára egy önálló identitású agent vagy legalább prompt
+
+most jutottam el oda, hogy a fejlesztések elején minden stakeholder szemével vizsgálja meg a factory, hogy ki mit szólna hozzá, milyen hatással lenne az adott szerepkörre. ez alatt sok részt értek:
+- a target system felhasználó oldali stakeholder lista:
+ - felhasználói szerepek: különféle terület admin szerepkörei, normál user, stb.
+ - üzleti szereplők: pl. megrendelő (aki a terméket igénybe fogja venni) anyagi döntéshozója (mennyibe kerül, hogyan szabályozhatók az elszálló költségek) jogi döntéshozók (jogász, DPO - a különféle megfelelőségek miatt stb.), kontrollere (pl. milyen riportok kellenek a havi számlához), stb.
+- a target system előállító oldali stakeholder lista:
+ - fejlesztők, marketingesek, befektetők, project menedzser, product owner, devops, kód biztonság, infra biztonság, jogi megfelelések, stb.
+- a delivery system (factory) előállítói oldal: harness engineer/delivery architect/platform engineer/stb.
+
 
 ### izoláció agent eltérítési veszélyek miatt \#harness\_engineering
 
